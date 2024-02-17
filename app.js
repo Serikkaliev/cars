@@ -66,7 +66,7 @@ app.post('/register', async (req, res) => {
   try {
     const result = await authService.register(user);
     if(result){
-      res.redirect('/login');
+      res.redirect('/home');
     }
   }
   catch (error) {

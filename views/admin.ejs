@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            height: 100%;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px;
+            text-align: center;
+        }
+        .users {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        .user {
+            width: 400px;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap:10px
+        }
+        .user p {
+            margin: 5px 0;
+            font-size: 20px;
+        }
+        .user form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .user form input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .create-user {
+            margin-top: 20px;
+        }
+        .create-user form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .create-user form label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .create-user form input[type="text"], .create-user form input[type="password"] {
+            padding: 10px;
+            font-size: 20px;
+        }
+        .create-user form input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        .create-user form input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .create-user form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            font-size: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Page</h1>
+        <div class="users">
+            <%
+              users.forEach(user => {
+            %>
+                <div class="user">
+                    <p> <strong>Username:</strong> <%= user.username %></p>
+                    <p><strong>isAdmin:</strong> <%= user.isAdmin%></p>
+                    <p> <strong>Created Date: </strong> <%= user.creationDate.toDateString()%> </p>
+                    <p> <strong>Updated Date: </strong> <%= user.updateDate.toDateString()%></p>
+                    <p> <strong>Deleted Date: </strong> <%= user.deletionDate === null ? 'null' : user.deletionDate.toDateString() %></p>
+                    <form action="/admin/delete" method="post">
+                        <input type="hidden" name="id" value="<%= user._id %>">
+                        <input type="submit" value="Delete User">
+                    </form>
+                </div>
+            <%  })
+             %>
+        </div>
+        <div class="create-user">
+            <form action="/admin" method="post" onsubmit="return validateForm()">
+                <label>
+                    <input type="text" name="username" placeholder="Username">
+                </label>
+                <label>
+                    <input type="password" name="password" placeholder="Password">
+                </label>
+                <input type="checkbox" name="isAdmin" id="isAdmin">
+                <label for="isAdmin">isAdmin</label>
+                <input type="submit" value="Create User">
+            </form>
+        </div>
+        <a href="/">Logout</a>
+    </div>
+    <script>
+        function validateForm() {
+            const username = document.querySelector('input[name="username"]').value;
+            const password = document.querySelector('input[name="password"]').value;
+            if (username === '' || password === '') {
+                alert('Username and Password are required');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

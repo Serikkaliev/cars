@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container{
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 200px;
+            justify-content: space-around;
+        }
+        input[type="text"], input[type="password"]{
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+        input[type="submit"]{
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100px;
+        }
+        input[type="submit"]:hover{
+            background-color: #45a049;
+        }
+        a{
+            text-decoration: none;
+            color: #4caf50;
+            font-weight: bold;
+        }
+        p{
+            margin-top: 20px;
+        }
+        .alert{
+            width: 30%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<% if (message) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= message %>
+    </div>
+<% } %>
+    <div class="container">
+        <h1>Log In</h1>
+        <form method="post" action="/login" onsubmit="return validateForm()">
+            <label for="name">
+                Username :
+                <input type="text" id="name" name="name" >
+            </label>
+            <label for="password">
+                Password :
+                <input type="password" id="password" name="password">
+            </label>
+            <input type="submit" value="Log In">
+        </form>
+        <p>Don't have an account? <a href="/register">Sign Up</a></p>
+    </div>
+<script>
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+        if (name === "" || password === "") {
+            alert("Name and Password must be filled out");
+            return false;
+        }
+        return true;
+    }
+    const alertElement = document.querySelector('.alert');
+    if (alertElement) {
+        alertElement.style.display = 'block';
+        // Hide the alert after 5 seconds
+        setTimeout(() => {
+            alertElement.style.display = 'none';
+        }, 2000); // 5 seconds in milliseconds
+    }
+</script>
+</body>
+</html>
+

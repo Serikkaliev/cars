@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: Arial, sans-serif;
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1{
+            margin-top: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .navbar{
+            margin-top: 30px;
+            width: 60%;
+            height: 100px;
+            background-color: #016a08;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+            border-radius:20px ;
+        }
+        .navbar a{
+            text-decoration: none;
+            color: white;
+            margin: 0 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar a:hover{
+            color: #f2f2f2;
+        }
+        .content{
+            width: 80%;
+            margin-top: 20px;
+            height: auto;
+        }
+        .content form{
+            margin-bottom: 20px;
+        }
+        .content form label{
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content form input[type="text"]{
+            width: 300px;
+            height: 30px;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        .content form input[type="submit"]{
+            width: 100px;
+            height: 40px;
+            font-size: 20px;
+            background-color: #016a08;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .content h2{
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .content div{
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #f2f2f2;
+            border-radius: 10px;
+        }
+        .content div h3{
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .content div p{
+            font-size: 20px;
+        }
+        .event{
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #f2f2f2;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/figures">Historical Figures</a>
+        <a href="/">Log out</a>
+    </div>
+    <div class="content">
+        <form action="/figures" method="get" onsubmit="return validateForm()">
+            <label for="year">Name:
+                <input type="text" name="name" id="name">
+            </label>
+            <input type="submit" value="Search">
+        </form>
+        <h2>Historical Figures</h2>
+        <%
+        figures.forEach(figure => {
+        %>
+            <div class="event">
+                <h3><%= figure.name %></h3>
+                <p>Profession: <%= figure.title %></p>
+                <p>Year of Birth:  <%= figure.info.born %></p>
+            </div>
+        <%
+        })
+        %>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        const text = document.getElementById('name').value;
+        if (text === "" ) {
+            alert("Please enter a name to search for.");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>
